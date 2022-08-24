@@ -115,12 +115,18 @@ def main(args):
     print('started reading comments')
     id_to_comment = {}
     ids = []
+    cnt = 0
 
     for line, _ in read_lines_zst(f'{args.raw_dir}/{fname}.zst'):
         comment = json.loads(line)
         comment = normalize_comment(comment, min_length=args.min_length, max_length=args.max_length)
+        
         id_to_comment[comment.id] = comment
         ids.append(comment.id)
+        cnt += 1
+
+        if cnt % 10000 == 0:
+            print(f'reading {cnt} comments')
 
         # for debug
         # if len(ids) > 100000:
