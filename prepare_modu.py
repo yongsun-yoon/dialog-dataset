@@ -1,4 +1,5 @@
-# 모두의 말뭉치 메신저 데이터
+# 모두의 말뭉치 메신저 말뭉치
+# 모두의 말뭉치 온라인 대화 말뭉치
 
 import json
 from glob import glob
@@ -6,14 +7,15 @@ from tqdm import tqdm
 
 import argparse
 parser = argparse.ArgumentParser()
+parser.add_argument('--dataset', type=str, default='modu-online')
 parser.add_argument('--sep_ord', type=int, default=1000)
 args = parser.parse_args()
 
 
 def main(args):
-    f = open(f'modu-messenger.txt', 'w')
+    f = open(f'{args.dataset}.txt', 'w')
 
-    fpaths = glob('modu-messenger/*.json')
+    fpaths = glob(f'{args.dataset}/*.json')
     for fp in tqdm(fpaths):
         data = json.load(open(fp, 'r'))
         for doc in data['document']:
